@@ -64,7 +64,7 @@ public class MainSurfaceView extends SurfaceView implements
 		TITLEINIT, TITLE, // タイトル
 		MENUINIT, MENU, // メニュー
 		SCENARIOINIT, SCENARIO, // シナリオ
-		MINIGAMEINIT, MINIGAME, // ミニゲーム
+		MINIGAMEINIT, MINIGAME, MINIGAME2// ミニゲーム
 	};
 
 	private CMODE cmode = null;
@@ -241,6 +241,9 @@ public class MainSurfaceView extends SurfaceView implements
 				break;
 			case MINIGAME:
 				minigame();
+				break;
+			case MINIGAME2:
+				minigame2();
 				break;
 			default:
 				canvas.drawColor(Color.CYAN);
@@ -512,30 +515,50 @@ public class MainSurfaceView extends SurfaceView implements
 	private void minigame() {
 		Matrix matrix = new Matrix();
 //		matrix.setScale((float)Util.dn, (float)Util.dn);
-		matrix.preTranslate((float)0, (float)minigameTime);
+		matrix.preTranslate((float)0, (float)(minigameTime%160));
 		matrix.postScale((float)Util.dn, (float)Util.dn);
 		canvas.drawBitmap(BmpLoader.getBitmap("dododo"), matrix, p);
 		
 		Matrix matrix2 = new Matrix();
-		matrix2.preTranslate((float)0, (float)(minigameTime-160));
+		matrix2.preTranslate((float)0, (float)(minigameTime%160-160));
 		matrix2.postScale((float)Util.dn, (float)Util.dn);
 		canvas.drawBitmap(BmpLoader.getBitmap("dododo"), matrix2, p);
 
 //		canvas.drawBitmap(BitmapLoader.getBitmap("dododo"), 0,minigameTime, p);
 //		canvas.drawBitmap(BitmapLoader.getBitmap("dododo"), 0,minigameTime-160, p);
 		minigameTime++;
-		if(minigameTime>160){
-			minigameTime = 0;
+		if(minigameTime>800){
+			cmode = CMODE.MENUINIT;
 		}
 		if(sl.pointx<100){
 			cmode = CMODE.MENUINIT;
 		}
 	}
+	
+	private void minigame2(){
+		canvas.drawBitmap(BmpLoader.getBitmap("meirin"), BmpLoader.getRect("meirin"),Util.dst, p);
+		canvas.drawText("時間" + minigameTime, 20*Util.dn, 20*Util.dn, p);
+		minigameTime++;
+		if(minigameTime%80<40){
+			canvas.drawText("待ち状態１", 80*Util.dn, 120*Util.dn, p);
+		}else{
+			canvas.drawText("待ち状態２", 80*Util.dn, 80*Util.dn, p);
+		}
+		if(minigameTime%100<20){
+			canvas.drawText("右", 160*Util.dn, 100*Util.dn, ptList.get(2));
+		}
+		if(minigameTime>800){
+			cmode = CMODE.MENU;
+		}
+	}
 
 	private void minigameinit() {
-		cmode = CMODE.MINIGAME;
+//		cmode = CMODE.MINIGAME;
+		cmode = CMODE.MINIGAME2;
 		minigameTime = 0;
 		BmpLoader.setBitmap("dododo");
+		BmpLoader.setBitmap("meirin");
+		p = ptList.get(4);
 	}
 
 	/**
