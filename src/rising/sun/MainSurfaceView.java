@@ -1,6 +1,9 @@
 package rising.sun;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import rising.sun.Util;
 
 import android.content.Context;
@@ -33,6 +36,8 @@ public class MainSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 	String str = null;
 	String str2 = null;
 	String str3 = null;
+	
+	List<Paint> paintList;
 	Paint p = new Paint();
 	Paint p2 = new Paint();
 	Paint p3 = new Paint();
@@ -97,13 +102,14 @@ public class MainSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 		res = this.getContext().getResources();	//リソースをゲット
 		
 		initGame();								// ゲームの初期化
+		initPaint();							// ペイントクラス郡の初期化
 		
 		sl = new ScenarioLoader(context, res);	// シナリオローダー作成	
 		
 		thread = new Thread(this);				// 新しいスレッドを作成
 		thread.start();							// 開始
 	}
-	
+
 	private void initGame() {					// 初期化
 		cmode = CMODE.LOGOINIT;						// 起動ロゴ表示状態にする
 		gameState = GAMESTATE.DEFAULT;
@@ -115,8 +121,17 @@ public class MainSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 		bloader = new BitmapLoader(res);
 //		getTagHandlers();						// タグハンドラの登録
 //		conducter = new Conductor(context, this);// コンダクタ(進行管理)生成
+	}
+	
+	private void initPaint() {
+		//ペイントクラスの初期化と追加
+		paintList = new ArrayList<Paint>();
+		Paint setp = new Paint();
+		setp.setColor(Color.BLACK);
+		setp.setTextSize(14*Util.dn);
+		paintList.add(setp);
 		
-        p.setAntiAlias(false);
+		p.setAntiAlias(false);
         p.setTextSize(14*Util.dn);
         p.setColor(Color.YELLOW);
         p3.setAntiAlias(true);
