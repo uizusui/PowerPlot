@@ -23,7 +23,7 @@ class BitmapDetail{
 }
 
 //画像は全てこの画像保持クラスから呼び出し(したい)
-public class BitmapLoader {
+public class BmpLoader {
 	static Resources res;
 	
 	static Map<String,BitmapDetail> map = new HashMap<String,BitmapDetail>();
@@ -31,8 +31,8 @@ public class BitmapLoader {
 	static BitmapFactory.Options opt = new BitmapFactory.Options();
 	
     
-    public BitmapLoader(Resources res){			//コンストラクタ
-    	BitmapLoader.res = res;
+    public BmpLoader(Resources res){			//コンストラクタ
+    	BmpLoader.res = res;
     	opt.inScaled = false;				//Samsung対策
     }
     

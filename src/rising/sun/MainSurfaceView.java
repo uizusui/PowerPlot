@@ -27,7 +27,7 @@ public class MainSurfaceView extends SurfaceView implements
 	private SurfaceHolder holder = null; // サーフェイスホルダー
 	private Canvas canvas = null; // キャンバス
 
-	BitmapLoader bloader;
+	BmpLoader bloader;
 
 	public ScenarioLoader sl = null; // シナリオローダー
 
@@ -120,7 +120,7 @@ public class MainSurfaceView extends SurfaceView implements
 		mark = 0;
 		area = 0;
 
-		bloader = new BitmapLoader(res);
+		bloader = new BmpLoader(res);
 		// getTagHandlers(); // タグハンドラの登録
 		// conducter = new Conductor(context, this);// コンダクタ(進行管理)生成
 	}
@@ -131,6 +131,7 @@ public class MainSurfaceView extends SurfaceView implements
 		Paint setp = new Paint();
 
 		// 0.黒いの（デフォルトコンソール的な）
+		setp.setAntiAlias(false);
 		setp.setColor(Color.BLACK);
 		setp.setTextSize(14 * Util.dn);
 		ptList.add(setp);
@@ -179,28 +180,18 @@ public class MainSurfaceView extends SurfaceView implements
 			// fps制御
 			// startTime = SystemClock.currentThreadTimeMillis();
 
-			// スキップの処理
-			// skip();
-			// 入力に対する処理
-			// input();
-			// コンダクタに指示を仰いだり
-			// conduct();
-			// オートモード
-			// auto();
-			// 画面揺れ
-			// quake();
-			// 音関連
-			// sound();
-			// 移動関係
-			// move();
-			// ウェイト関連
-			// myWait();
+			// スキップの処理	// skip();
+			// 入力に対する処理			// input();
+			// コンダクタに指示を仰いだり			// conduct();
+			// オートモード			// auto();
+			// 画面揺れ			// quake();
+			// 音関連			// sound();
+			// 移動関係			// move();
+			// ウェイト関連			// myWait();
 
 			// 描画
 			draw();
-			// スリープ
-			// mySleep();
-
+			// スリープ			// mySleep();
 			// debugCount++;
 		}
 	}
@@ -247,48 +238,13 @@ public class MainSurfaceView extends SurfaceView implements
 				canvas.drawRect(Util.wst, p4);
 				break;
 			}
-
-			/*
-			 * switch(gameState) { case TRANS: transDraw(canvas); break; case
-			 * HISTORY: drawLayers(canvas); history.onDraw(canvas); break;
-			 * default: drawLayers(canvas); // レイヤの描画 break; }
-			 */
 			holder.unlockCanvasAndPost(canvas); // 描画
-
-			// holder.unlockCanvasAndPost(c2);
-
 		}
 
-	}
-
-	private void minigame() {
-		Matrix matrix = new Matrix();
-//		matrix.setScale((float)Util.dn, (float)Util.dn);
-		matrix.preTranslate((float)0, (float)minigameTime);
-		matrix.postScale((float)Util.dn, (float)Util.dn);
-		canvas.drawBitmap(BitmapLoader.getBitmap("dododo"), matrix, p);
-		
-		Matrix matrix2 = new Matrix();
-		matrix2.preTranslate((float)0, (float)(minigameTime-160));
-		matrix2.postScale((float)Util.dn, (float)Util.dn);
-		canvas.drawBitmap(BitmapLoader.getBitmap("dododo"), matrix2, p);
-
-//		canvas.drawBitmap(BitmapLoader.getBitmap("dododo"), 0,minigameTime, p);
-//		canvas.drawBitmap(BitmapLoader.getBitmap("dododo"), 0,minigameTime-160, p);
-		minigameTime++;
-		if(minigameTime>160){
-			minigameTime = 0;
-		}
-	}
-
-	private void minigameinit() {
-		cmode = CMODE.MINIGAME;
-		minigameTime = 0;
-		BitmapLoader.setBitmap("dododo");
 	}
 
 	public void transmenuinit() { // ロゴ表示関数初期化
-		BitmapLoader.setBitmap("balloobluene"); // ロゴ登録
+		BmpLoader.setBitmap("balloobluene"); // ロゴ登録
 		cmode = CMODE.LOGO;
 	}
 
@@ -309,20 +265,20 @@ public class MainSurfaceView extends SurfaceView implements
 			cmode = CMODE.TITLEINIT; // 　タイトル画面に移動
 		}
 		lcounter++; // 　ロゴがだんだん濃くなる処理(Alpha値を制御,0→255)
-		canvas.drawBitmap(BitmapLoader.getBitmap("balloobluene"),
-				BitmapLoader.getRect("balloobluene"), Util.dst, p);// 　oplogoをoplogoの大きさ(Rect)から画面の倍率に合わせて(dst)表示している
+		canvas.drawBitmap(BmpLoader.getBitmap("balloobluene"),
+				BmpLoader.getRect("balloobluene"), Util.dst, ptList.get(0));// 　oplogoをoplogoの大きさ(Rect)から画面の倍率に合わせて(dst)表示している
 	}
 
 	public void titleinit() {
 		p.setAlpha(255); // 　Paint pの透明度は255(完全表示)に固定
-		BitmapLoader.setBitmap("image3");
+		BmpLoader.setBitmap("image3");
 		cmode = CMODE.TITLE;
 	}
 
 	public void title() {
 		canvas.drawColor(Color.BLUE); // 白で初期化
-		canvas.drawBitmap(BitmapLoader.getBitmap("image3"),
-				BitmapLoader.getRect("image3"), Util.dst, p);// タイトル画像を表示
+		canvas.drawBitmap(BmpLoader.getBitmap("image3"),
+				BmpLoader.getRect("image3"), Util.dst, p);// タイトル画像を表示
 		if (sl.fup == 1) {
 			sl.fup = 0;
 			cmode = CMODE.MENUINIT;// メニュー画面に移行
@@ -381,9 +337,9 @@ public class MainSurfaceView extends SurfaceView implements
 	}
 
 	public void scenarioinit() {
-		BitmapLoader.setBitmap("superbottom");
-		BitmapLoader.setBitmap("image3");
-		BitmapLoader.setBitmap("smap");
+		BmpLoader.setBitmap("superbottom");
+		BmpLoader.setBitmap("image3");
+		BmpLoader.setBitmap("smap");
 		sl.setDays();
 		sl.fup = 0;
 		cmode = CMODE.SCENARIO;
@@ -398,10 +354,10 @@ public class MainSurfaceView extends SurfaceView implements
 		canvas.drawRect(sl.hitpr, sl.hp); // ステータスバー
 		canvas.drawRect(sl.metpr, sl.mp); // ステータスバー
 		canvas.drawRect(sl.luckr, sl.lp); // ステータスバー
-		canvas.drawBitmap(BitmapLoader.getBitmap("superbottom"),
-				BitmapLoader.getRect("superbottom"), Util.dst, p); // ブロック↑
-		canvas.drawBitmap(BitmapLoader.getBitmap("image3"),
-				BitmapLoader.getRect("image3"), Util.clst, p);
+		canvas.drawBitmap(BmpLoader.getBitmap("superbottom"),
+				BmpLoader.getRect("superbottom"), Util.dst, p); // ブロック↑
+		canvas.drawBitmap(BmpLoader.getBitmap("image3"),
+				BmpLoader.getRect("image3"), Util.clst, p);
 
 		switch (gameState) {
 		case DAYINIT:
@@ -461,8 +417,8 @@ public class MainSurfaceView extends SurfaceView implements
 			}
 			break;
 		case ATKSELECT:
-			canvas.drawBitmap(BitmapLoader.getBitmap("smap"),
-					BitmapLoader.getRect("smap"), Util.dst, p);
+			canvas.drawBitmap(BmpLoader.getBitmap("smap"),
+					BmpLoader.getRect("smap"), Util.dst, p);
 			if (sl.onscreenf == 1) { // タッチされているときの処理
 				area = sl.maparea(); // マップ選択時のタッチエリア判定
 				// for(int j=0;j<4;j++){ //上下左右の選択部分に半透明表示
@@ -533,6 +489,32 @@ public class MainSurfaceView extends SurfaceView implements
 		default:
 			break;
 		}
+	}
+	
+	private void minigame() {
+		Matrix matrix = new Matrix();
+//		matrix.setScale((float)Util.dn, (float)Util.dn);
+		matrix.preTranslate((float)0, (float)minigameTime);
+		matrix.postScale((float)Util.dn, (float)Util.dn);
+		canvas.drawBitmap(BmpLoader.getBitmap("dododo"), matrix, p);
+		
+		Matrix matrix2 = new Matrix();
+		matrix2.preTranslate((float)0, (float)(minigameTime-160));
+		matrix2.postScale((float)Util.dn, (float)Util.dn);
+		canvas.drawBitmap(BmpLoader.getBitmap("dododo"), matrix2, p);
+
+//		canvas.drawBitmap(BitmapLoader.getBitmap("dododo"), 0,minigameTime, p);
+//		canvas.drawBitmap(BitmapLoader.getBitmap("dododo"), 0,minigameTime-160, p);
+		minigameTime++;
+		if(minigameTime>160){
+			minigameTime = 0;
+		}
+	}
+
+	private void minigameinit() {
+		cmode = CMODE.MINIGAME;
+		minigameTime = 0;
+		BmpLoader.setBitmap("dododo");
 	}
 
 	/**
