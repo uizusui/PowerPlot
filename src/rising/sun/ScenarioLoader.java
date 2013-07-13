@@ -488,7 +488,7 @@ public class ScenarioLoader {
     }
     
     public int darea(){
-    	if(pointx<Util.basePointX||pointx>Util.endPointX||pointy<Util.basePointY||pointy>Util.endPointY){
+    	if(pointx<0||pointx>Util.drawAreaWidth||pointy<0||pointy>Util.dispHeight){
     		return 0;
     	}
     	if(Util.dayselect[0].contains((int)pointx, (int)pointy))return 1;
@@ -501,7 +501,7 @@ public class ScenarioLoader {
     }
     
     public int maparea(){
-    	if(pointx<Util.basePointX||pointx>Util.endPointX||pointy<Util.basePointY||pointy>Util.endPointY){
+    	if(pointx<0||pointx>Util.drawAreaWidth||pointy<0||pointy>Util.dispHeight){
     		return 0;
     	}
     	if(Util.mapselect[0].contains((int)pointx, (int)pointy))return 1;

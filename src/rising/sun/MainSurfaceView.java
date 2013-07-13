@@ -446,12 +446,12 @@ public class MainSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 					break;
 				case 5:
 					if(sl.onscreenTime>200){
-						sl.smapx=(int)(sl.mapx+(sl.pointx-Util.basePointX))/Util.dn;	//元倍率のマップ上選択座標x
-						sl.smapy=(int)(sl.mapy+(sl.pointy-Util.basePointY))/Util.dn;	//元倍率のマップ上選択座標y
+						sl.smapx=(int)(sl.mapx+(sl.pointx))/Util.dn;	//元倍率のマップ上選択座標x
+						sl.smapy=(int)(sl.mapy+(sl.pointy))/Util.dn;	//元倍率のマップ上選択座標y
 						if(sl.mapobject()!=0){	//もし選択座標がマップオブジェクト上にあったら
 							//sl.mapobjecton();	//オブジェクトを選択状態にする
-							sl.sbx = Util.basePointX + (sl.smapx-sl.mapx)/Util.dn;
-							sl.sby = Util.basePointY + (sl.smapy-sl.mapy)/Util.dn;
+							sl.sbx = (sl.smapx-sl.mapx)/Util.dn;
+							sl.sby = (sl.smapy-sl.mapy)/Util.dn;
 							sl.sex = sl.sbx + 50;
 							sl.sey = sl.sby + 50;
 							canvas.drawRect(sl.sbx, sl.sby, sl.sex, sl.sey, p4);

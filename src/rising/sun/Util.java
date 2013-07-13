@@ -33,10 +33,6 @@ public final class Util
 	public static int dispRate = 4;					// 拡大率
 	public static int drawAreaWidth = 960;			// 拡大を適用した後のサイズ
 	public static int drawAreaHeight = 640;			// standardDispX * rare
-	public static int basePointX = 160;				// 描画開始位置x
-	public static int basePointY = 40;				// 描画開始位置y
-	public static int endPointX = 1120;				// 描画終了位置x
-	public static int endPointY = 680;				// 描画終了位置y
 
 	public static int quakeX = 0;					// 画面揺らしの補正
 	public static int quakeY = 0;					// 画面揺らしの補正
@@ -115,11 +111,7 @@ public final class Util
 		drawAreaHeight = standardDispHeight * dn;
 		dw2 = width / 2 ;			//画面中心x
 		dh2 = height / 2 ;			//画面中心y
-		basePointX = dw2 - ( standardDispWidth * dispRate ) / 2; //画面中心座標x-表示領域x/2 →　描画開始x
-		basePointY = dh2 - ( standardDispHeight * dispRate ) / 2; //描画開始y
-		endPointX = dw2 + ( standardDispWidth * dispRate ) / 2; //画面中心座標x-表示領域x/2 →　描画終了x
-		endPointY = dh2 + ( standardDispHeight * dispRate ) / 2; //描画終了y
-		baseRect = new Rect(basePointX,basePointY,endPointX,endPointY);
+
 		betw = dw2 - standardDispWidth * dn / 2;
 		beth = dh2 - standardDispHeight * dn / 2;
 		//ここまでで描画開始点が確定
