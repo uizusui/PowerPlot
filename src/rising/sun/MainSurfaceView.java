@@ -137,27 +137,37 @@ public class MainSurfaceView extends SurfaceView implements
 		ptList.add(setp);
 
 		// 1.白いの
+		setp = new Paint();
 		setp.setColor(Color.WHITE);
 		setp.setTextSize(14 * Util.dn);
 		ptList.add(setp);
 
 		// 2.青いの
+		setp = new Paint();
 		setp.setColor(Color.BLUE);
 		setp.setTextSize(14 * Util.dn);
 		ptList.add(setp);
 		// 3.赤いの
+		setp = new Paint();
 		setp.setColor(Color.RED);
 		setp.setTextSize(14 * Util.dn);
 		ptList.add(setp);
 
 		// 4.緑の
+		setp = new Paint();
 		setp.setColor(Color.GREEN);
+		setp.setTextSize(14 * Util.dn);
+		ptList.add(setp);
+		
+		// 5.黄色いの
+		setp = new Paint();
+		setp.setColor(Color.YELLOW);
 		setp.setTextSize(14 * Util.dn);
 		ptList.add(setp);
 
 		p.setAntiAlias(false);
 		p.setTextSize(14 * Util.dn);
-		p.setColor(Color.YELLOW);
+//		p.setColor(Color.YELLOW);
 		p3.setAntiAlias(true);
 		p3.setColor(Color.RED); // 赤に設定(仮)
 		p3.setTextSize(14 * Util.dn); // 文字の大きさ
@@ -246,6 +256,7 @@ public class MainSurfaceView extends SurfaceView implements
 	public void transmenuinit() { // ロゴ表示関数初期化
 		BmpLoader.setBitmap("balloobluene"); // ロゴ登録
 		cmode = CMODE.LOGO;
+		p = ptList.get(0);
 	}
 
 	public void transmenu() {
@@ -266,7 +277,7 @@ public class MainSurfaceView extends SurfaceView implements
 		}
 		lcounter++; // 　ロゴがだんだん濃くなる処理(Alpha値を制御,0→255)
 		canvas.drawBitmap(BmpLoader.getBitmap("balloobluene"),
-				BmpLoader.getRect("balloobluene"), Util.dst, ptList.get(0));// 　oplogoをoplogoの大きさ(Rect)から画面の倍率に合わせて(dst)表示している
+				BmpLoader.getRect("balloobluene"), Util.dst, p);// 　oplogoをoplogoの大きさ(Rect)から画面の倍率に合わせて(dst)表示している
 	}
 
 	public void titleinit() {
@@ -287,28 +298,34 @@ public class MainSurfaceView extends SurfaceView implements
 
 	public void menuinit() {// 初期化
 		sl.setMenu();
+		BmpLoader.setBitmap("menu");
 		sl.sethuki();
+		BmpLoader.setBitmap("hukidashi");
 		sl.setkoma();
+		BmpLoader.setBitmap("komachara");
 		sl.setnazu();
+		BmpLoader.setBitmap("nazu7");
+		//メニューのエリア判定
 		sl.setMenuc();
 		sl.touchwait = 1;
+		p = ptList.get(0);
 		cmode = CMODE.MENU;
 	}
 
 	public void menu() {
 		canvas.drawColor(Color.GREEN); // 白で初期化
-		canvas.drawBitmap(sl.menu, Util.src, Util.dst, p);
+		canvas.drawBitmap(BmpLoader.getBitmap("menu"), Util.src, Util.dst, p);
 		if (sl.onscreenf == 1) { // タッチされている間表示
 			area = sl.marea();
 			if (area != 0) { // エリア判定
-				canvas.drawBitmap(sl.hukidashi, sl.oplogor, Util.dst, p); // 吹き出しの表示
+				canvas.drawBitmap(BmpLoader.getBitmap("hukidashi"), BmpLoader.getRect("hukidashi"), Util.dst, p); // 吹き出しの表示
 				canvas.drawText(sl.menus[area - 1], Util.menucx, Util.menucy, p); // キャラのしゃべり
-				canvas.drawBitmap(sl.komachara, sl.menur[area - 1], Util.menuc,
+				canvas.drawBitmap(BmpLoader.getBitmap("komachara"), sl.menur[area - 1], Util.menuc,
 						p); // キャラの画像
 			}
 			canvas.drawCircle(sl.pointx, sl.pointy, sl.pradius * Util.dn, p3);
-			canvas.drawText("x=" + this.x, 100, 100, p3); //
-			canvas.drawText("y=" + this.y, 100, 150, p3); // デバッグ用
+			canvas.drawText("x=" + this.x, 100, 100, ptList.get(3)); //
+			canvas.drawText("y=" + this.y, 100, 150, ptList.get(3)); // デバッグ用
 		}
 		if (sl.touchwait == 0 && sl.onscreenf == 0) { // 指が離れた場合の処理
 			sl.touchwait = 1;
@@ -342,6 +359,7 @@ public class MainSurfaceView extends SurfaceView implements
 		BmpLoader.setBitmap("smap");
 		sl.setDays();
 		sl.fup = 0;
+		p = ptList.get(5);
 		cmode = CMODE.SCENARIO;
 	}
 
@@ -508,6 +526,9 @@ public class MainSurfaceView extends SurfaceView implements
 		minigameTime++;
 		if(minigameTime>160){
 			minigameTime = 0;
+		}
+		if(sl.pointx<100){
+			cmode = CMODE.MENUINIT;
 		}
 	}
 
