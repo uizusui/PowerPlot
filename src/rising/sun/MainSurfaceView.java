@@ -50,6 +50,9 @@ public class MainSurfaceView extends SurfaceView implements
 	boolean marker;
 
 	int dispmag = 1;
+	
+	//ミニゲームのフレームカウント
+	int minigameTime;
 
 	// ゲーム進行制御
 	// private Conductor conducter = null; // コンダクタ
@@ -259,13 +262,29 @@ public class MainSurfaceView extends SurfaceView implements
 	}
 
 	private void minigame() {
-		// TODO Auto-generated method stub
+		Matrix matrix = new Matrix();
+//		matrix.setScale((float)Util.dn, (float)Util.dn);
+		matrix.preTranslate((float)0, (float)minigameTime);
+		matrix.postScale((float)Util.dn, (float)Util.dn);
+		canvas.drawBitmap(BitmapLoader.getBitmap("dododo"), matrix, p);
+		
+		Matrix matrix2 = new Matrix();
+		matrix2.preTranslate((float)0, (float)(minigameTime-160));
+		matrix2.postScale((float)Util.dn, (float)Util.dn);
+		canvas.drawBitmap(BitmapLoader.getBitmap("dododo"), matrix2, p);
 
+//		canvas.drawBitmap(BitmapLoader.getBitmap("dododo"), 0,minigameTime, p);
+//		canvas.drawBitmap(BitmapLoader.getBitmap("dododo"), 0,minigameTime-160, p);
+		minigameTime++;
+		if(minigameTime>160){
+			minigameTime = 0;
+		}
 	}
 
 	private void minigameinit() {
-		// TODO Auto-generated method stub
-
+		cmode = CMODE.MINIGAME;
+		minigameTime = 0;
+		BitmapLoader.setBitmap("dododo");
 	}
 
 	public void transmenuinit() { // ロゴ表示関数初期化
